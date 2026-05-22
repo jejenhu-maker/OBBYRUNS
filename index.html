@@ -55,7 +55,7 @@
       <h1>OBBYRUNS</h1>
       <p>Race other Obby runners across silly 3D water courses. Grab coins, bounce on red trampolines, zoom on green speed pads, and do not fall into the water!</p>
       <button class="btn big" id="startBtn">PLAY NOW</button>
-      <p style="font-size:13px;margin-bottom:0">Keyboard: ← → / A D to steer, Space to jump as many times as you want. Phone: left joystick and keep tapping Jump in the air.</p>
+      <p style="font-size:13px;margin-bottom:0">Keyboard: ← → / A D to steer, Space to jump up to 1,000 times in the air. Phone: left joystick and keep tapping Jump.</p>
     </div>
   </div>
   <div class="pad" id="pad"><div class="stick" id="stick"></div></div>
@@ -75,6 +75,7 @@
   let W=0,H=0,DPR=1, last=0, paused=false, started=false, toastTimer=0;
   const keys = new Set();
   const input = { steer:0, jump:false };
+  const MAX_AIR_JUMPS = 1000;
   const rand = seed => { let t=seed*9301+49297; return () => ((t=(t*9301+49297)%233280)/233280); };
 
   const state = {
@@ -182,11 +183,13 @@
     else if(!p && r.y <= -5){ r.dead=true; if(isPlayer){ toast('Splash! Back to start!'); setTimeout(()=>resetLevel(false),650); } }
     else r.grounded=false;
     if(isPlayer && input.jump){
-      r.jumps = r.grounded ? 1 : r.jumps + 1;
-      r.vy = r.jumps === 1 ? 13.5 : 12.3;
-      r.grounded = false;
-      burst(r.x,r.z,r.jumps === 1 ? '#fff' : '#7dd3fc',r.jumps === 1 ? 8 : 14);
-      if(r.jumps > 1) toast('Air jump!');
+      if(r.grounded || r.jumps <= MAX_AIR_JUMPS){
+        r.jumps = r.grounded ? 1 : r.jumps + 1;
+        r.vy = r.jumps === 1 ? 13.5 : 12.3;
+        r.grounded = false;
+        burst(r.x,r.z,r.jumps === 1 ? '#fff' : '#7dd3fc',r.jumps === 1 ? 8 : 14);
+        if(r.jumps > 1) toast(`Air jump ${r.jumps - 1}/${MAX_AIR_JUMPS}!`);
+      }
     }
     if(isPlayer) input.jump=false;
 
