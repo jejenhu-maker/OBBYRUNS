@@ -8,12 +8,13 @@ Open `index.html` in a browser, or deploy with GitHub Pages.
 
 ## Controls
 
-- Keyboard: `←` / `→` or `A` / `D` to steer, `Space` to jump, press again in the air for a double jump
-- Phone / tablet: left joystick + right Jump button, tap again in the air for a double jump
+- Keyboard: `←` / `→` or `A` / `D` to steer, `Space` to jump, keep pressing in the air for unlimited air jumps
+- Phone / tablet: left joystick + right Jump button, keep tapping in the air for unlimited air jumps
 
 ## Tech
 
 - Single-file HTML5 Canvas game
 - No dependencies
 - No build step
+
 
